@@ -8,13 +8,13 @@ const Auth = () => {
             <img 
                 src={fond} 
                 alt="fond" 
-                className="absolute top-0 left-0 w-full h-full object-cover brightness-60 -z-10" 
+                className="absolute top-0 left-0 w-full h-full object-cover opacity-20 -z-10" 
             />
 
             {/* Contenu par-dessus */}
-            <div className=" text-2xl f z-10 opacity-80 flex flex-col items-center gap-4">
+            <div className=" text-2xl z-10 opacity-80 flex flex-col items-center gap-4">
                 <i className="text-6xl text-[#6cf7d8] "><GiFullMotorcycleHelmet /></i>
-                <span className="font-extrabold">MotoSecure MG</span>
+                <span className="font-extrabold text-white_mc">MotoSecure MG</span>
             </div>
         </div>
 
