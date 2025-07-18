@@ -8,7 +8,7 @@
   --color-primary_mc: #1c1c1b;  
   --color-second_mc: #ffbf01;
   --color-third_mc: #383838;
-  --color-white_mc: #e9e8e9;
+  --color-white_mc: #fefffe;
   --color-line: #a0aec013;
 
   --breakpoint-xxs: 320px;
@@ -40,7 +40,7 @@ body{
 }
 
 body {
-  @apply bg-[#e9e8e9] text-black;
+  @apply bg-[#fff] text-black;
 }
 
 @media (prefers-color-scheme: dark) {
