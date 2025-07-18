@@ -13,8 +13,8 @@ const Auth = () => {
 
             {/* Contenu par-dessus */}
             <div className=" text-2xl z-10 opacity-80 flex flex-col items-center gap-4">
-                <i className="text-6xl text-[#6cf7d8] "><GiFullMotorcycleHelmet /></i>
-                <span className="font-extrabold text-white_mc">MotoSecure MG</span>
+                <i className="text-6xl text-second_mc "><GiFullMotorcycleHelmet /></i>
+                <span className="font-extrabold">MotoSecure MG</span>
             </div>
         </div>
 

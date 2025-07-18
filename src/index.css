@@ -1,10 +1,12 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
 
 @theme {
   --font-scripte: Great Vibes, cursive;
   --color-primary_mc: #1c1c1b;  
-  --color-second_mc: #6cf7d8;
+  --color-second_mc: #ffbf01;
   --color-third_mc: #383838;
   --color-white_mc: #fefffe;
   --color-line: #a0aec013;
@@ -35,4 +37,14 @@ body{
   left: 0;
   position: fixed;
   width: 100%;
+}
+
+body {
+  @apply bg-[#fefffe] text-black;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-[#1c1c1b] text-[#fefffe];
+  }
 }
