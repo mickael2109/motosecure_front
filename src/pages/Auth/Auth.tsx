@@ -8,7 +8,7 @@ const Auth = () => {
             <img 
                 src={fond} 
                 alt="fond" 
-                className="absolute top-0 left-0 w-full h-full object-cover opacity-20 -z-10" 
+                className="absolute top-0 left-0 w-full h-full object-cover opacity-10 -z-10" 
             />
 
             {/* Contenu par-dessus */}
