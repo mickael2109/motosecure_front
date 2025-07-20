@@ -11,13 +11,22 @@ const MyMap = () => {
     <div className="rounded-xl overflow-hidden border-0 w-70 h-50">
       <MapContainer
         center={position}
-        zoom={15}
+        zoom={16}
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%', backgroundColor: '#1c1c1b' }}
       >
         <TileLayer
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+          url="https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://carto.com/">CARTO</a>'
         />
+
+        {/* claire */}
+        {/* <TileLayer
+  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  attribution='&copy; OpenStreetMap contributors'
+/>
+ */}
+
         <Marker position={position} />
       </MapContainer>
     </div>
