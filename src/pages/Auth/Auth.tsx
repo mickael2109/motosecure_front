@@ -1,4 +1,4 @@
-import fond from "../../assets/fond/page2.svg"
+import fond from "../../assets/fond/page4.svg"
 import { GiFullMotorcycleHelmet } from "react-icons/gi";
 
 const Auth = () => {
