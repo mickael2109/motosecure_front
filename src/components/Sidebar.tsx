@@ -12,7 +12,7 @@ const Sidebar = () => {
         <div className="fixed w-full flex flex-row items-center justify-center bottom-5 z-9999">
            <div  className="flex flex-row px-6 py-4 justify-center gap-8  dark:bg-white/10 bg-black/30 backdrop-blur-md   rounded-full">
                 <NavLink to="/home/profil" className={`${path === "profil"? "dock-active ": ""} `} onClick={() => setPath("profil")}>
-                    <i className="text-[35px] text-second_mc"><RiHome3Line></RiHome3Line></i>
+                    <i className="text-[25px] text-second_mc"><RiHome3Line></RiHome3Line></i>
                 </NavLink>
                 
                 <NavLink to="/home" className={`${path === "home"? "dock-active ": ""}`} onClick={() => setPath("home")}>
