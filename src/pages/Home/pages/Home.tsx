@@ -76,7 +76,7 @@ const Home = () => {
                 </div>
 
                 <div className="flex flex-row items-center justify-center">
-                    <Map></Map>
+                    <div className="w-70 h-50 "><Map></Map></div>
                 </div>
             </div>
 

@@ -23,7 +23,7 @@ const Sidebar = () => {
                     <i className="text-[25px]"><IoIosLogOut></IoIosLogOut></i>
                 </NavLink>
            </div>
-           <div  className="flex flex-row px-6 py-4 justify-center gap-8   rounded-full absolute -z-1">
+           {/* <div  className="flex flex-row px-6 py-4 justify-center gap-8   rounded-full absolute -z-1">
                 <NavLink to="/home/profil" className={`${path === "profil"? "dock-active ": ""} bg-second_mc  backdrop-blur-md `} onClick={() => setPath("profil")}>
                     <i className="text-[35px]"><FaRegUserCircle></FaRegUserCircle></i>
                 </NavLink>
@@ -35,7 +35,7 @@ const Sidebar = () => {
                 <NavLink to="/" >
                     <i className="text-[25px]"><IoIosLogOut></IoIosLogOut></i>
                 </NavLink>
-           </div>
+           </div> */}
         </div>
     );
 }
