@@ -6,8 +6,8 @@
 
 @theme {
   --font-scripte: Great Vibes, cursive;
-  --color-primary_mc: #1c1c1b;  
-  --color-second_mc: #2ffdb9;
+  --color-primary_mc: #080908;  
+  --color-second_mc: #5327c2;
   --color-third_mc: #383838;
   --color-white_mc: #fefffe;
   --color-line: #a0aec013;
@@ -27,12 +27,13 @@
   
 }
 
+
 i{
   cursor: pointer;
 }
 
 body{
-  background-color: #1c1c1b;
+  background-color: #080908;
   height: 100vh;
   top: 0;
   left: 0;
@@ -46,6 +47,6 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    @apply bg-[#1c1c1b] text-[#fefffe];
+    @apply bg-[#080908] text-[#fefffe];
   }
 }

@@ -10,17 +10,17 @@ const Sidebar = () => {
 
     return (
         <div className="fixed w-full flex flex-row items-center justify-center bottom-5 z-9999">
-           <div  className="flex flex-row px-6 py-4 justify-center gap-8  dark:bg-white/10 bg-black/10 backdrop-blur-sm h-[6vh] rounded-full">
+           <div  className="flex flex-row px-10 py-6 justify-center gap-12  dark:bg-white/10 bg-black/10 backdrop-blur-sm h-[8vh] rounded-full">
                 <NavLink to="/" className={`${path === "profil"? "dock-active ": ""} `} onClick={() => setPath("profil")}>
-                    <i className="text-[25px] text-second_mc"><RiHome3Line></RiHome3Line></i>
+                    <i className="text-[30px] text-second_mc"><RiHome3Line></RiHome3Line></i>
                 </NavLink>
                 
                 <NavLink to="/carte" className={`${path === "home"? "dock-active ": ""} `} onClick={() => setPath("home")}>
-                    <i className="text-[25px]"><FaRegUserCircle></FaRegUserCircle></i>
+                    <i className="text-[30px]"><FaRegUserCircle></FaRegUserCircle></i>
                 </NavLink>
                 
                 <NavLink to="/" >
-                    <i className="text-[25px]"><IoIosLogOut></IoIosLogOut></i>
+                    <i className="text-[30px]"><IoIosLogOut></IoIosLogOut></i>
                 </NavLink>
            </div>
            {/* <div  className="flex flex-row px-6 py-4 justify-center gap-8   rounded-full absolute -z-1">
