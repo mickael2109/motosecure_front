@@ -10,16 +10,16 @@ const Sidebar = () => {
 
     return (
         <div className="fixed w-full flex flex-row items-center justify-center bottom-5 z-9999">
-           <div  className="flex flex-row px-10 py-6 justify-center gap-12  dark:bg-white/10 bg-black/10 backdrop-blur-sm h-[8vh] rounded-full">
-                <NavLink to="/" className={`${path === "profil"? "dock-active ": ""} `} onClick={() => setPath("profil")}>
-                    <i className="text-[30px] text-second_mc"><RiHome3Line></RiHome3Line></i>
+           <div  className="flex flex-row justify-center items-center gap-1 p-4  dark:bg-white/10 bg-black/10 backdrop-blur-sm h-[10vh] rounded-full">
+                <NavLink to="/" className={`${path === "profil"? "dock-active ": ""} bg-second_mc text-white rounded-full p-4 `} onClick={() => setPath("profil")}>
+                    <i className="text-[30px]"><RiHome3Line></RiHome3Line></i>
                 </NavLink>
                 
-                <NavLink to="/carte" className={`${path === "home"? "dock-active ": ""} `} onClick={() => setPath("home")}>
+                <NavLink to="/carte" className={`${path === "home"? "dock-active ": ""} rounded-full p-4`} onClick={() => setPath("home")}>
                     <i className="text-[30px]"><FaRegUserCircle></FaRegUserCircle></i>
                 </NavLink>
                 
-                <NavLink to="/" >
+                <NavLink to="/" className={`${path === "logout"? "dock-active ": ""} rounded-full p-4`} onClick={() => setPath("logout")}>
                     <i className="text-[30px]"><IoIosLogOut></IoIosLogOut></i>
                 </NavLink>
            </div>

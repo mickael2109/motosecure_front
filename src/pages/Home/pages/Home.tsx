@@ -5,10 +5,14 @@ import { IoMdNotifications } from "react-icons/io";
 // import { LuMapPin } from "react-icons/lu";
 import 'leaflet/dist/leaflet.css';
 // import Map from "../../../components/Map";
-import { IoMdPower } from "react-icons/io";
+import { MdPowerOff } from "react-icons/md";
+import { MdPower } from "react-icons/md";
+import { FaChevronRight } from "react-icons/fa6";
+import { useState } from "react";
 
 const Home = () => {    
 
+    const [isOn, setIsOn] = useState(false);
 
     return (
         <div className="relative min-h-screen bg-cover bg-center p-6 ">
@@ -59,12 +63,51 @@ const Home = () => {
                         </div>
                     </div>
 
-                   <div className="flex flex-col items-center justify-center gap-6">
+                   <div className="flex flex-col items-center justify-center gap-8">
                         <div>
                             <div><span className="text-4xl font-bold opacity-70">Hi, Mickael</span></div>
                         </div>
 
-                        <div>
+                        <div
+                            onClick={() => setIsOn(!isOn)}
+                            className={`relative flex flex-row items-center justify-center gap-2 p-2 rounded-full transition-all duration-900 ${isOn ? "bg-gradient-to-r": "bg-gradient-to-l"} from-transparent to-second_mc/40 border border-second_mc/10 w-[180px] h-[68px] cursor-pointer`}
+                        >
+                            {/* Moving background indicator */}
+                            <div
+                                className={`absolute top-1 left-2 w-14 h-14 rounded-full transition-all duration-500 bg-second_mc/60 z-0 ${
+                                isOn ? "translate-x-[107px]" : "translate-x-0"
+                                }`}
+                            ></div>
+
+                            {/* Icon PowerOff */}
+                            <div className="relative z-10 rounded-full p-2">
+                                <i className={`text-3xl ${isOn? "text-black/60": "text-white/60"}`}>
+                                <MdPowerOff />
+                                </i>
+                            </div>
+
+                            {/* Chevrons */}
+                            <div className="flex flex-row items-center justify-center gap-1 relative z-10 text-[12px]">
+                                <i className={`${isOn ? "rotate-180 opacity-75": "rotate-0 opacity-25"} text-white`}>
+                                <FaChevronRight />
+                                </i>
+                                <i className={`${isOn ? "rotate-180": "rotate-0"} opacity-50 text-white`}>
+                                <FaChevronRight />
+                                </i>
+                                <i className={`${isOn ? "rotate-180 opacity-25": "rotate-0 opacity-75"} text-white`}>
+                                <FaChevronRight />
+                                </i>
+                            </div>
+
+                            {/* Icon PowerOn */}
+                            <div className="relative z-10 rounded-full p-2">
+                                <i className={`text-3xl ${!isOn? "text-black/60": "text-white/60"}`}>
+                                <MdPower />
+                                </i>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center gap-4">
                             <div className="border-8 border-second_mc/50 p-2 rounded-full">
                                 <div className="border border-[#232628] bg-[#232628] p-5 rounded-full w-80 h-80 flex flex-col items-center justify-center relative">
                                     <img 
@@ -78,11 +121,9 @@ const Home = () => {
                                 </div> */}
                             </div>
 
-                            <div className="flex flex-row items-center justify-center">
-                               <div className="w-25 flex flex-row items-end py-4 rounded-b-full justify-center h-[15vh] bg-gradient-to-b from-trasparent to-second_mc/40">
-                                    <i className="text-2xl cursor-pointer opacity-80 font-bold bg-white/80 p-4 rounded-full text-red-600"><IoMdPower /></i>
-                                </div>
-
+                            <div className="flex flex-row items-center justify-center gap-2">
+                                <span className="w-5 h-5 rounded-full bg-second_mc border border-second_mc"></span>
+                                <span className="w-5 h-5 rounded-full border opacity-50"></span>
                             </div>
                         </div>
                    </div>
