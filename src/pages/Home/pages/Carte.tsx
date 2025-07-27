@@ -8,7 +8,7 @@ const Carte = () => {
 
     return (
       <div>
-        <div className="w-full h-screen fixed "><Map></Map></div>
+        <div className="w-full h-screen fixed "><Map page="page_map"></Map></div>
 
         {/* lumiere map */}
         <div className="blur-3xl dark:bg-second_mc/50 backdrop-blur-m w-[30%] absolute top-1/2 -translate-y-1/2 h-[10vh] left-1/2 transform -translate-x-1/2 px-4 py-3 rounded-xl shadow-xl text-white">

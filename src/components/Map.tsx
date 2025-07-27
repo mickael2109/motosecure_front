@@ -552,7 +552,11 @@ const ResizeMapOnToggle = ({ position, trigger }: { position: LatLngExpression, 
   return null;
 };
 
-const MyMap = () => {
+interface MapProps {
+  page: string;
+}
+
+const MyMap: React.FC<MapProps> = ({ page }) => {
   const [tileUrl, setTileUrl] = useState("");
   const [position, setPosition] = useState<LatLngExpression>([-18.823707410254165, 47.55651565808284]);
   const [route, setRoute] = useState<LatLngExpression[]>([]);
@@ -582,12 +586,12 @@ const MyMap = () => {
 
 
   return (
-    <div onClick={toggleMap} className='relative w-full h-full cursor-pointer'>
+    <div onClick={toggleMap} className={`relative w-full h-full cursor-pointer ${page ==='home' && "rounded-full"}`}>
       <MapContainer
         center={position}
         zoom={16}
         scrollWheelZoom={true}
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '100%', width: '100%', borderRadius: page === 'home' ? '50%' : '0' }}
       >
         {tileUrl && (
           <TileLayer

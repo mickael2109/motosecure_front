@@ -4,15 +4,18 @@ import fond from "../../../assets/png/moto2.png"
 import { IoMdNotifications } from "react-icons/io";
 // import { LuMapPin } from "react-icons/lu";
 import 'leaflet/dist/leaflet.css';
-// import Map from "../../../components/Map";
-import { MdPowerOff } from "react-icons/md";
+import Map from "../../../components/Map";
+import { MdGpsFixed, MdPowerOff } from "react-icons/md";
 import { MdPower } from "react-icons/md";
 import { FaChevronRight } from "react-icons/fa6";
 import { useState } from "react";
+import { FaCompass } from "react-icons/fa";
+import { IoSpeedometer } from "react-icons/io5";
 
 const Home = () => {    
 
     const [isOn, setIsOn] = useState(false);
+    const [dotHome, setDotHome] = useState("moto");
 
     return (
         <div className="relative min-h-screen bg-cover bg-center p-6 ">
@@ -81,7 +84,7 @@ const Home = () => {
 
                             {/* Icon PowerOff */}
                             <div className="relative z-10 rounded-full p-2">
-                                <i className={`text-3xl ${isOn? "text-black/60": "text-white/60"}`}>
+                                <i className={`text-3xl ${isOn? "text-black/60 dark:text-white/60": "text-white/60"}`}>
                                 <MdPowerOff />
                                 </i>
                             </div>
@@ -101,7 +104,7 @@ const Home = () => {
 
                             {/* Icon PowerOn */}
                             <div className="relative z-10 rounded-full p-2">
-                                <i className={`text-3xl ${!isOn? "text-black/60": "text-white/60"}`}>
+                                <i className={`text-3xl ${!isOn? "text-black/60 dark:text-white/60": "text-white/60"}`}>
                                 <MdPower />
                                 </i>
                             </div>
@@ -109,22 +112,32 @@ const Home = () => {
 
                         <div className="flex flex-col items-center justify-center gap-4">
                             <div className="border-8 border-second_mc/50 p-2 rounded-full">
-                                <div className="border border-[#232628] bg-[#232628] p-5 rounded-full w-80 h-80 flex flex-col items-center justify-center relative">
-                                    <img 
-                                        src={fond} 
-                                        alt="fond" 
-                                        className="z-10 object-contain" 
-                                    />
-                                </div>
-                                {/* <div className="flex flex-col h-screen justify-center items-center absolute top-0 left-0 w-full z-10">
-                                    <span className="w-40 h-40 rounded-full dark:bg-white bg-second_mc opacity-60 blur-3xl shadow-2xl"></span>
-                                </div> */}
+                                {
+                                    dotHome === "moto" ? (
+                                        <div className="border border-[#232628] bg-[#232628] p-5 rounded-full w-80 h-80 flex flex-col items-center justify-center relative">
+                                            <img 
+                                                src={fond} 
+                                                alt="fond" 
+                                                className="z-10 object-contain" 
+                                            />    
+                                        </div>
+                                    ):(
+                                        <div className="w-80 h-80"><Map page="home"></Map></div>
+                                    )
+                                }
+                                
+                                
                             </div>
 
                             <div className="flex flex-row items-center justify-center gap-2">
-                                <span className="w-5 h-5 rounded-full bg-second_mc border border-second_mc"></span>
-                                <span className="w-5 h-5 rounded-full border opacity-50"></span>
+                                <span className={`w-5 h-5 rounded-full cursor-pointer ${dotHome === "moto" ? "bg-second_mc border border-second_mc" : "border opacity-50"}`} onClick={() => setDotHome('moto')}></span>
+                                <span className={`w-5 h-5 rounded-full cursor-pointer ${dotHome === "carte" ? "bg-second_mc border border-second_mc" : "border opacity-50"}`} onClick={() => setDotHome('carte')}></span>
                             </div>
+                        </div>
+                        <div className="border border-second_mc/10 dark:bg-second_mc/5 bg-black/10 backdrop-blur-m w-[80%] p-2 text-[12px] font-semibold rounded-xl dark:shadow-xl opacity-70">
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: -13.39433232 / Lat: 15.3423323</span></div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><IoSpeedometer /></i><span>15Km/H</span></div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Nord</div>
                         </div>
                    </div>
 
@@ -164,11 +177,7 @@ const Home = () => {
                             <span className="bg-second_mc/20 text-[12px] font-bold p-2 rounded-full">5km</span>
                         </div>
                     </div>
-                    <div className="text-[14px] mt-6 font-semibold">
-                        <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: -13.39433232 / Lat: 15.3423323</span></div>
-                        <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><IoSpeedometer /></i><span>15Km/H</span></div>
-                        <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Nord</div>
-                    </div>
+                   
                 </div> */}
                
             </div>
