@@ -22,7 +22,7 @@
 
 
   --breakpoint-h-sm: 600px;
-  --breakpoint-h-md: 850px;
+  --breakpoint-h-md: 820px;
   --breakpoint-h-lg: 900px;
   
 }
@@ -48,5 +48,68 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     @apply bg-[#080908] text-[#fefffe];
+  }
+}
+
+
+@media (max-height: 900px) {
+  .h-lg\:break_lg_bool {
+    @apply w-70 h-70;
+  }
+  .h-lg\:break_lg_icon {
+    @apply p-2;
+  }
+  .h-lg\:break_lg_txthome {
+    @apply text-2xl;
+  }
+}
+
+
+
+
+
+@media (max-height: 820px) {
+  .h-md\:break_md_gap1 {
+    @apply gap-2;
+  }
+  .h-md\:break_md_gap2 {
+    @apply gap-4;
+  }
+
+
+  .h-md\:break_md_power1 {
+    @apply h-[58px] w-[165px];
+  }
+  .h-md\:break_md_power2 {
+    @apply w-12 h-12;
+  }
+  .h-md\:break_md_power3 {
+    @apply text-2xl;
+  }
+  .h-md\:break_md_power4 {
+    @apply translate-x-[100px];
+  }
+  
+
+  .h-md\:break_md_bool {
+    @apply w-50 h-50;
+  }
+
+  .h-md\:break_md_dot {
+    @apply w-3 h-3;
+  }
+
+  .h-md\:break_md_sid {
+    @apply top-1;
+  }
+
+  .h-md\:break_md_translate_home {
+    @apply translate-x-[55px];
+  }
+  .h-md\:break_md_translate_carte {
+    @apply translate-x-[-3px];
+  }
+   .h-md\:break_md_translate_profile {
+    @apply translate-x-[115px];
   }
 }
