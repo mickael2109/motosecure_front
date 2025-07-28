@@ -42,7 +42,7 @@ body{
 }
 
 body {
-  @apply bg-[#f9f9f9] text-black;
+  @apply bg-[#f1f0f1] text-black;
 }
 
 @media (prefers-color-scheme: dark) {
