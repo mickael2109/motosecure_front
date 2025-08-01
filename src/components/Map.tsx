@@ -5,8 +5,8 @@
 
 // const ORS_API_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImEzZjg4NjczNDM4ZDQwYTk5M2FhZjcyMmJlYmVlYmRhIiwiaCI6Im11cm11cjY0In0='; // à remplacer par ta clé
 
-// const start = [47.52572293092114, -18.922396163996325]; // [lon, lat]
-// const end   = [47.55646760280859, -18.82376445819213 ];
+// const end = [47.55647918135085, -18.823777842685075]; // [lon, lat]
+// const start   = [47.558489173847164, -18.890844605589468 ];
 
 
 // interface MapProps {

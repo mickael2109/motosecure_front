@@ -1,7 +1,7 @@
-import fond from "../../assets/fond/page4.svg"
+import fond from "../../../assets/fond/page4.svg"
 import { GiFullMotorcycleHelmet } from "react-icons/gi";
 
-const Auth = () => {
+const Loading = () => {
     return (
         <div className="relative min-h-screen bg-cover bg-center flex flex-col justify-center items-center p-4">
             {/* Image de fond floue et sombre */}
@@ -21,4 +21,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default Loading;

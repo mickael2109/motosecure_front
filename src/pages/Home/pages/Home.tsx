@@ -12,11 +12,38 @@ import { useState } from "react";
 import { FaCompass } from "react-icons/fa";
 import { IoMoonOutline, IoSpeedometer } from "react-icons/io5";
 import { LuSunDim } from "react-icons/lu";
+import { useSelector } from "react-redux";
+import { getToken, getUser } from "../../../features/user/selectors";
+import Cookies from "js-cookie";
+import { useAppDispatch } from "../../../app/store";
+import { useNavigate } from "react-router-dom";
+import { resetApp } from "../../../app/resetAction";
+import { selectAllMotoUser } from "../../../features/moto/selectors";
 
 const Home = () => {    
 
+     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const [isOn, setIsOn] = useState(false);
     const [dotHome, setDotHome] = useState("moto");
+
+    const user = useSelector(getUser);
+    const moto = useSelector(selectAllMotoUser);
+    // const coordinate = useSelector(selectCoordinate);
+    const token = useSelector(getToken);
+
+    console.log("token : ",token);
+    console.log("user : ",user);
+    console.log("moto : ",moto);
+    
+    
+    const handleLogout = async () => {
+        Cookies.remove("___motosecure");
+
+        dispatch(resetApp()); // Reset Redux state
+        navigate("/");
+    };
+
 
     return (
         <div className="relative min-h-screen bg-cover bg-center p-6 dark:bg-gradient-to-b from-transparent to-second_mc/30 ">
@@ -28,7 +55,7 @@ const Home = () => {
                             <div ><img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" className="w-15 h-15 rounded-full border border-second_mc"/></div>
                         </div>
                         <div className="flex flex-row justify-center items-center gap-2 opacity-60">
-                            <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon"><i className="text-2xl"><IoMdNotifications /></i></div>
+                            <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" onClick={handleLogout}><i className="text-2xl"><IoMdNotifications /></i></div>
                             <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon">
                                 <label className="swap swap-rotate">
                                  {/* this hidden checkbox controls the state */}
