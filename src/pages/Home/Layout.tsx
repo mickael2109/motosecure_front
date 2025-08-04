@@ -8,6 +8,7 @@ import { getAllMotoUser } from '../../features/moto/thunk';
 import { selectAllMotoUser } from '../../features/moto/selectors';
 import { getAllHistoCoordinateMoto } from '../../features/coordinate/thunk';
 import LoadingPage from '../../utils/loadingPage';
+import NotifItem from '../../components/organisms/NotifItem';
 
 const Layout = () => {
     
@@ -16,10 +17,17 @@ const Layout = () => {
     const token = useSelector(getToken);
     const moto = useSelector(selectAllMotoUser);
     const [isLoading, setIsLoading] = useState(true);
-    
+    const [notifReceive, setNotifReceive] = useState(true)    
 
 
-     useEffect(() => {
+    useEffect(() => {
+        if (token && user) {
+            setIsLoading(false)
+        }
+    }, [token, user]);
+
+
+    useEffect(() => {
         const fetchData = async () => {
             if (token && user && isLoading) {
                 await dispatch(getAllMotoUser(user.id)).unwrap();
@@ -35,6 +43,27 @@ const Layout = () => {
         fetchData();
 
     }, [dispatch, moto, token, user, isLoading]);
+
+
+    // 1. Réinitialiser notifReceive à true toutes les 20s
+    useEffect(() => {
+        const interval = setInterval(() => {
+        setNotifReceive(true);
+        }, 20000); // 20 secondes
+
+        return () => clearInterval(interval); // nettoyage à la destruction du composant
+    }, []);
+
+    // 2. Masquer la notification après 5s si elle est active
+    useEffect(() => {
+        if (notifReceive) {
+        const timer = setTimeout(() => {
+            setNotifReceive(false);
+        }, 5000); // 5 secondes
+
+        return () => clearTimeout(timer);
+        }
+    }, [notifReceive]);
  
 
      if (isLoading) {
@@ -43,6 +72,9 @@ const Layout = () => {
 
     return (
        <div className="fixed top-0 left-0 w-full">
+
+            {/* Notification */}
+            {notifReceive && <NotifItem />}
        
             {/* Contenu principal */}
             <div className="flex-1 overflow-hidden h-[100vh]">

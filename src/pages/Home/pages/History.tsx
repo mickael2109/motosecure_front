@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { selectCoordinateHisto } from "../../../features/coordinate/selectors";
-import HistoryItem from "../../../components/organisms/HistoryItem";
+import HistoryCoordinateItem from "../../../components/organisms/HistoryCoordinateItem";
 
 import { parseDateKey } from "../../../utils/convertDate";
 import type { CoordinateHistoryMap } from "../../../types/CoordinateInterface";
@@ -95,7 +95,7 @@ const History = () => {
                         Object.entries(sortedCoordinateHisto).map(([dateLabel, items]) => (
                             <div key={dateLabel} className="flex flex-col gap-2" onClick={() => setHistoSelect(dateLabel)}>
                                 <div className="flex flex-col gap-2">
-                                        <HistoryItem >
+                                        <HistoryCoordinateItem >
                                             <div className={`flex flex-row justify-between  p-2 rounded-2xl ${histoSelect === dateLabel ? "bg-second_mc/60": "bg-second_mc/10"}`}>
                                                 <div className="flex flex-row justify-start items-center gap-4">
                                                     <div>
@@ -111,7 +111,7 @@ const History = () => {
                                                     <div><i className="text-yellow-500"><CgDanger /></i></div>
                                                 </div>
                                             </div>
-                                        </HistoryItem>
+                                        </HistoryCoordinateItem>
                                 </div>
                             </div>
                         ))

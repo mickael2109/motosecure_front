@@ -1,5 +1,5 @@
 import {Routes, Route} from 'react-router-dom'
-import { Carte, History, Home, Layout, Profil } from '../pages/Home';
+import { Carte, History, Home, Layout, Notification, Profil } from '../pages/Home';
 
 const HomeRoute = () => {
     return (
@@ -10,6 +10,7 @@ const HomeRoute = () => {
             <Route path="/profil" element={<Profil/>}/>
             <Route path="/history" element={<History/>}/>
           </Route>
+          <Route path="/notification" element={<Notification/>}/>
           
         </Routes>
     );

@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { getToken, getUser } from "../../../features/user/selectors";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "../../../app/store";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { resetApp } from "../../../app/resetAction";
 import { selectAllMotoUser } from "../../../features/moto/selectors";
 
@@ -56,7 +56,7 @@ const Home = () => {
                         </div>
                         <div className="flex flex-row justify-center items-center gap-2 opacity-60">
                             <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" onClick={handleLogout}><i className="text-2xl"><IoMdNotifications /></i></div>
-                            <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon">
+                            <NavLink to="/home/notification"  className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" >
                                 <label className="swap swap-rotate">
                                  {/* this hidden checkbox controls the state */}
                                 <input type="checkbox" />
@@ -69,7 +69,7 @@ const Home = () => {
                                 
                               
                                 </label>
-                            </div>
+                            </NavLink>
                         </div>
                     </div>
 

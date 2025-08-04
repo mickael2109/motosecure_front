@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 
-const HistoryItem = ({ children }: { children: React.ReactNode }) => {
+const HistoryCoordinateItem = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [isBlurred, setIsBlurred] = useState(false);
 
@@ -30,4 +30,4 @@ const HistoryItem = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default HistoryItem
+export default HistoryCoordinateItem
