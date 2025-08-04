@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { getToken, getUser } from '../../features/user/selectors';
 import { getAllMotoUser } from '../../features/moto/thunk';
 import { selectAllMotoUser } from '../../features/moto/selectors';
-import { getAllCoordinateMoto } from '../../features/coordinate/thunk';
+import { getAllHistoCoordinateMoto } from '../../features/coordinate/thunk';
 import LoadingPage from '../../utils/loadingPage';
 
 const Layout = () => {
@@ -26,7 +26,7 @@ const Layout = () => {
                 
 
                 if(moto.length > 0){
-                    await dispatch(getAllCoordinateMoto(moto[0].id)).unwrap();
+                    await dispatch(getAllHistoCoordinateMoto(moto[0].id)).unwrap();
                 }
 
                 setIsLoading(false);

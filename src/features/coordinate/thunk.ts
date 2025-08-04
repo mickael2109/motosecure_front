@@ -18,3 +18,21 @@ export const getAllCoordinateMoto = createAsyncThunk(
     }
   }
 );
+
+
+
+
+/**
+ * get all histo coordinate moto
+ */
+export const getAllHistoCoordinateMoto = createAsyncThunk(
+  'coordinate/getAllHistoCoordinateMoto',
+  async (motoId: number) => {
+    try {
+      const response = await coordinateService.getAllHistoCoordinateMoto(motoId); 
+      return response.data; 
+    } catch (err) {
+      throw err;
+    }
+  }
+);

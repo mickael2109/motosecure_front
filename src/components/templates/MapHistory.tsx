@@ -1,20 +1,38 @@
 import type { LatLngExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
+import type { CoordinateInterface } from '../../types/CoordinateInterface';
+import { useMap } from 'react-leaflet';
+import type { LatLngBoundsExpression } from 'leaflet';
 
-interface CoordonneInterface {
-  lat: number;
-  long: number;
+interface FitMapToRouteProps {
+  positions: LatLngExpression[];
 }
 
-const MapHistory: React.FC = () => {
-  const coordonne: CoordonneInterface[] = [
-    { lat: -18.890785, long: 47.558469 },
-    { lat: -18.890814, long: 47.558372 },
-    { lat: -18.890864, long: 47.55835 },
-    { lat: -18.891343, long: 47.558378 },
-    { lat: -18.89132, long: 47.558347 },
-  ];
+const FitMapToRoute: React.FC<FitMapToRouteProps> = ({ positions }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (positions.length > 0) {
+      map.fitBounds(positions as LatLngBoundsExpression, {
+        padding: [30, 30], // optionnel pour ne pas coller les bords
+      });
+    }
+  }, [positions, map]);
+
+  return null;
+};
+
+
+
+interface MapProps {
+  coordonne: CoordinateInterface[];
+}
+
+
+const MapHistory: React.FC<MapProps> = ({coordonne}) => {
+
+  
 
   const [route, setRoute] = useState<LatLngExpression[]>([]);
   const [start, setStart] = useState<LatLngExpression | null>(null);
@@ -27,7 +45,7 @@ const MapHistory: React.FC = () => {
       const firstPoint = coordonne[0];
       setStart([firstPoint.lat, firstPoint.long]);
     }
-  }, []);
+  }, [coordonne]);
 
   return (
     <>
@@ -39,9 +57,13 @@ const MapHistory: React.FC = () => {
           />
 
           {route.length > 0 && (
-            <Polyline positions={route} pathOptions={{ color: '#2ffdb9' }} />
+            <>
+              <Polyline positions={route} pathOptions={{ color: '#2ffdb9' }} />
+              <FitMapToRoute positions={route} />
+            </>
           )}
         </MapContainer>
+
       )}
     </>
   );

@@ -4,18 +4,45 @@ import { CgDanger } from "react-icons/cg";
 import { useEffect, useRef, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { selectCoordinate } from "../../../features/coordinate/selectors";
+import { selectCoordinateHisto } from "../../../features/coordinate/selectors";
 import HistoryItem from "../../../components/organisms/HistoryItem";
 
-import { format, isToday, isYesterday, parseISO } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { parseDateKey } from "../../../utils/convertDate";
+import type { CoordinateHistoryMap } from "../../../types/CoordinateInterface";
+import { selectAllMotoUser } from "../../../features/moto/selectors";
 
 const History = () => {
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [selectHistory, setSelectHistory] = useState(false)
-    const coordinate = useSelector(selectCoordinate);
+    const moto = useSelector(selectAllMotoUser);
+    const coordinateHisto = useSelector(selectCoordinateHisto)
+   
+    const [histoSelect, setHistoSelect] = useState("");
 
+    // Trier d'abord les données
+    const sortedCoordinateHisto = Object.entries(coordinateHisto ?? {})
+    .sort(([keyA], [keyB]) => {
+        const dateA = parseDateKey(keyA);
+        const dateB = parseDateKey(keyB);
+        return dateB.getTime() - dateA.getTime();
+    })
+    .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+    }, {} as CoordinateHistoryMap);
+
+    // Initialiser histoSelect avec la première clé triée
+    useEffect(() => {
+    const firstKey = Object.keys(sortedCoordinateHisto)[0];
+    if (firstKey && histoSelect === "") {
+        setHistoSelect(firstKey);
+    }
+    }, [sortedCoordinateHisto, histoSelect]);
+
+    // console.log("sortedCoordinateHisto :", sortedCoordinateHisto[histoSelect].coord);
+
+    
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -30,25 +57,22 @@ const History = () => {
         };
     }, []);
 
-    // const coordinate = useSelector(selectCoordinate);
+   
 
-    const sortedHistorique = [...coordinate].sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); 
-    });
+    if (sortedCoordinateHisto[histoSelect] === undefined) {
+        return (
+             <div className="flex w-52 flex-col gap-4">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+            </div>
+        )
+    }
 
-    const groupedCoordinate = sortedHistorique.reduce((acc, item) => {
-        const date = parseISO(item.createdAt);
-        
-        let key = '';
-        if (isToday(date)) key = "Aujourd'hui";
-        else if (isYesterday(date)) key = "Hier";
-        else key = format(date, 'dd/MM/yyyy', { locale: fr });
+    
 
-        if (!acc[key]) acc[key] = [];
-        acc[key].push(item);
-
-        return acc;
-    }, {} as Record<string, typeof coordinate>);
+    
 
     return (
         <div className="">
@@ -56,7 +80,9 @@ const History = () => {
                 className="fixed w-full h-screen "
                 ref={containerRef}
                 onClick={() => setSelectHistory(true)}
-            ><MapHistory /></div>
+            >
+                <MapHistory coordonne={sortedCoordinateHisto[histoSelect].coord} />
+            </div>
 
             {/* info */}
             <div className={`fixed bottom-0 w-full ${selectHistory ? "h-[30vh]" : "h-[50vh]"} transition-all duration-500 ease-in-out  bg-black/60 backdrop-blur-[2px] rounded-t-4xl p-4`}>
@@ -64,45 +90,34 @@ const History = () => {
 
                 <div className="flex flex-col gap-1 overflow-y-scroll overflow-hidden max-h-[45vh]">
 
-                {
-                    coordinate.length > 0 ? (
-                        <>
-                            {
-                                Object.entries(groupedCoordinate).map(([dateLabel, items]) => (
-                                    <div key={dateLabel} className="flex flex-col gap-2">
-                                        <div><span className="text-[12px] opacity-60">{dateLabel}</span></div>
-
-                                        <div className="flex flex-col gap-2">
-                                        {items.map((item, index) => (
-                                            <HistoryItem key={index}>
-                                                <div className="flex flex-row justify-between bg-second_mc/10 p-2 rounded-2xl">
-                                                    <div className="flex flex-row justify-start items-center gap-4">
-                                                        <div>
-                                                            <i className="text-4xl"><GiFullMotorcycleHelmet /></i>
-                                                        </div>
-                                                        <div>
-                                                            <div><span className="text-[14px]">{item.long}</span></div>
-                                                            <div><span className="text-[12px]">1 aout 2025</span></div>
-                                                        </div>
+              
+                    {
+                        Object.entries(sortedCoordinateHisto).map(([dateLabel, items]) => (
+                            <div key={dateLabel} className="flex flex-col gap-2" onClick={() => setHistoSelect(dateLabel)}>
+                                <div className="flex flex-col gap-2">
+                                        <HistoryItem >
+                                            <div className={`flex flex-row justify-between  p-2 rounded-2xl ${histoSelect === dateLabel ? "bg-second_mc/60": "bg-second_mc/10"}`}>
+                                                <div className="flex flex-row justify-start items-center gap-4">
+                                                    <div>
+                                                        <i className="text-4xl"><GiFullMotorcycleHelmet /></i>
                                                     </div>
-                                                    <div className="text-[12px] flex flex-col items-center justify-center">
-                                                        <div>30 km</div>
-                                                        <div><i className="text-yellow-500"><CgDanger /></i></div>
+                                                    <div>
+                                                        <div><span className="text-[14px]">{moto[0].pseudo}</span></div>
+                                                        <div><span className="text-[12px]">{items.data.km} km</span></div>
                                                     </div>
                                                 </div>
-                                            </HistoryItem>
-                                        ))}
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                                                <div className="text-[12px] flex flex-col items-center justify-center">
+                                                    <div>{dateLabel}</div>
+                                                    <div><i className="text-yellow-500"><CgDanger /></i></div>
+                                                </div>
+                                            </div>
+                                        </HistoryItem>
+                                </div>
+                            </div>
+                        ))
+                    }
 
-                        </>
-                    ):
-                    (
-                        <div className="text-center opacity-60 text-[12px]">Aucun historique</div>
-                    )
-                }
+                       
                
                 </div>
 
