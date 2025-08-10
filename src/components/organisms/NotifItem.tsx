@@ -2,7 +2,12 @@ import logo from '../../assets/png/logo.png'
 import { truncateToWords } from '../../utils/truncateToWords';
 import { CgDanger } from "react-icons/cg";
 
-const NotifItem = () => {
+
+interface notifProps {
+  text: string;
+}
+
+const NotifItem: React.FC<notifProps> = ({ text }) => {
 
 
   return (
@@ -18,7 +23,7 @@ const NotifItem = () => {
     </div>
     <div className='flex flex-col justify-between'>
       <div>MotoSecure</div>
-      <div className='text-[12px]'>{truncateToWords("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur,", 10)}</div>
+      <div className='text-[12px]'>{truncateToWords(text, 10)}</div>
     </div>
     <div className='opacity-60'><i className='text-2xl text-red-500'><CgDanger /></i></div>
   </div>

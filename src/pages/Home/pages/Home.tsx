@@ -19,18 +19,23 @@ import { useAppDispatch } from "../../../app/store";
 import { NavLink, useNavigate } from "react-router-dom";
 import { resetApp } from "../../../app/resetAction";
 import { selectAllMotoUser } from "../../../features/moto/selectors";
+import type { OnOffMotoInterface } from "../../../types/MotoInterface";
+import { onOffMotoThunk } from "../../../features/moto/thunk";
 
 const Home = () => {    
 
      const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const [isOn, setIsOn] = useState(false);
-    const [dotHome, setDotHome] = useState("moto");
 
     const user = useSelector(getUser);
     const moto = useSelector(selectAllMotoUser);
     // const coordinate = useSelector(selectCoordinate);
     const token = useSelector(getToken);
+
+
+    const [isOn, setIsOn] = useState(moto[0].status);
+    const [dotHome, setDotHome] = useState("moto");
+    
 
     console.log("token : ",token);
     console.log("user : ",user);
@@ -42,6 +47,24 @@ const Home = () => {
 
         dispatch(resetApp()); // Reset Redux state
         navigate("/");
+    };
+
+
+    const actionButton = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const data : OnOffMotoInterface = ({
+            id: 1,
+            status: isOn
+        })
+        
+        try {
+            await dispatch(onOffMotoThunk(data))
+
+        } catch (err) {
+            console.error("Erreur lors d'éteindre ou allumer le moteur :", err);
+            // SweetAlert.errorPage("Une erreur est survenue");
+        } 
     };
 
 
@@ -78,7 +101,8 @@ const Home = () => {
                             <div><span className="text-4xl h-lg:break_lg_txthome font-bold opacity-70">Hi, Mickael</span></div>
                         </div>
 
-                        <div
+                        <form
+                            onSubmit={actionButton}
                             onClick={() => setIsOn(!isOn)}
                             className={`relative flex flex-row items-center justify-center gap-2 p-2 rounded-full transition-all duration-900 ${isOn ? "bg-gradient-to-r": "bg-gradient-to-l"} from-transparent to-second_mc/80 dark:to-second_mc/40 border border-second_mc/10 w-[180px] h-[68px] h-md:break_md_power1 cursor-pointer`}
                         >
@@ -90,11 +114,11 @@ const Home = () => {
                             ></div>
 
                             {/* Icon PowerOff */}
-                            <div className="relative z-10 rounded-full p-2">
+                            <button type="submit" className="relative z-10 rounded-full p-2">
                                 <i className={`text-3xl h-md:break_md_power3 ${isOn? "text-black/60 dark:text-white/60": "text-white/60"}`}>
                                 <MdPowerOff />
                                 </i>
-                            </div>
+                            </button>
 
                             {/* Chevrons */}
                             <div className="flex flex-row items-center justify-center gap-1 relative z-10 text-[12px]">
@@ -110,12 +134,12 @@ const Home = () => {
                             </div>
 
                             {/* Icon PowerOn */}
-                            <div className="relative z-10 rounded-full p-2">
+                            <button type="submit" className="relative z-10 rounded-full p-2">
                                 <i className={`text-3xl h-md:break_md_power3 ${!isOn? "text-black/60 dark:text-white/60": "text-white/60"}`}>
                                 <MdPower />
                                 </i>
-                            </div>
-                        </div>
+                            </button>
+                        </form>
 
                         <div className="flex flex-col items-center justify-center gap-4">
                             <div className="border-8 border-second_mc/80 dark:border-second_mc/50 p-2 rounded-full">

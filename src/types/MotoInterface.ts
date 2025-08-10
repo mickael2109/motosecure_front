@@ -11,3 +11,8 @@ export interface MotoInterface {
     updatedAt: string;
 }
 
+
+export interface OnOffMotoInterface {
+    id: number;
+    status: boolean;
+}

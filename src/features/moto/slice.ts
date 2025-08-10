@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { MotoState } from "./type";
-import { getAllMotoUser } from "./thunk";
+import { getAllMotoUser, onOffMotoThunk } from "./thunk";
 
 const initialState: MotoState = {
     status: "idle",
@@ -32,6 +32,44 @@ const motoSlice = createSlice({
       state.status = "failed";
       state.error = action.error.message || "An error occurred";
     });
+
+
+    /**
+     * on off moto
+     */
+    builder.addCase(onOffMotoThunk.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.error = null;
+
+      console.log("action.payload.data: ", action.payload.data);
+
+      if (action.payload.success) {
+        const updatedMoto = action.payload.data;
+
+        // Cherche la moto par id
+        const index = state.moto.findIndex(m => m.id === updatedMoto.id);
+
+        if (index !== -1) {
+          // Mise à jour
+          state.moto[index] = updatedMoto;
+        } else {
+          // Si elle n'existe pas encore, on l'ajoute
+          state.moto.push(updatedMoto);
+        }
+      }
+    });
+
+
+    builder.addCase(onOffMotoThunk.pending, (state) => {
+      state.status = "loading";
+    });
+
+    builder.addCase(onOffMotoThunk.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message || "Une erreur s'est produite";
+    });
+
+
   },
 });
 
