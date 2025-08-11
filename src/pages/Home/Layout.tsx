@@ -36,6 +36,18 @@ const Layout = () => {
 
    
     useEffect(() => {
+       socket.on('gps', (socketValue) => {
+         console.log("gps : ",socketValue);
+         
+       });
+   
+       return () => {
+         socket.off('gps');
+       };
+    }, []);
+
+
+    useEffect(() => {
        socket.on('statusmoto', (socketValue) => {
          console.log("status moto : ",socketValue);
          

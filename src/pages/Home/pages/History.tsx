@@ -11,6 +11,7 @@ import { parseDateKey } from "../../../utils/convertDate";
 import type { CoordinateHistoryMap } from "../../../types/CoordinateInterface";
 import { selectAllMotoUser } from "../../../features/moto/selectors";
 
+
 const History = () => {
 
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -32,6 +33,8 @@ const History = () => {
         return acc;
     }, {} as CoordinateHistoryMap);
 
+    
+
     // Initialiser histoSelect avec la première clé triée
     useEffect(() => {
     const firstKey = Object.keys(sortedCoordinateHisto)[0];
@@ -39,10 +42,6 @@ const History = () => {
         setHistoSelect(firstKey);
     }
     }, [sortedCoordinateHisto, histoSelect]);
-
-    // console.log("sortedCoordinateHisto :", sortedCoordinateHisto[histoSelect].coord);
-
-    
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -72,6 +71,9 @@ const History = () => {
 
     
 
+     console.log("sortedCoordinateHisto: ",sortedCoordinateHisto[Object.keys(sortedCoordinateHisto)[0]]);
+
+    
     
 
     return (
