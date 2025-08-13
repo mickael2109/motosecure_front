@@ -6,6 +6,10 @@ export interface MotoInterface {
     pseudo: string;
     userId: number;
     status: boolean;
+    isVibration: boolean;
+    lastLat: number;
+    lastLong: number;
+    lastSpeed: number;
     User: UserInterface
     createdAt: string;
     updatedAt: string;

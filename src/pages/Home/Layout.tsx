@@ -10,6 +10,11 @@ import { getAllHistoCoordinateMoto } from '../../features/coordinate/thunk';
 import LoadingPage from '../../utils/loadingPage';
 import NotifItem from '../../components/organisms/NotifItem';
 import io from 'socket.io-client';
+import { selectCoordinateHisto } from '../../features/coordinate/selectors';
+import { parseDateKey } from '../../utils/convertDate';
+import type { CoordinateHistoryMap } from '../../types/CoordinateInterface';
+import { addCoordinateToday } from '../../features/coordinate/slice';
+import { socketCoordMoto, socketVibrationAndStatusMoto } from '../../features/moto/slice';
 
 
 const socket = io('https://mc-back.onrender.com', {
@@ -34,29 +39,19 @@ const Layout = () => {
     //     }
     // }, [token, user]);
 
-   
-    useEffect(() => {
-       socket.on('gps', (socketValue) => {
-         console.log("gps : ",socketValue);
-         
-       });
-   
-       return () => {
-         socket.off('gps');
-       };
-    }, []);
 
 
     useEffect(() => {
        socket.on('statusmoto', (socketValue) => {
-         console.log("status moto : ",socketValue);
-         
+        console.log("socketValue: ",socketValue);
+        
+         dispatch(socketVibrationAndStatusMoto({ motoId: socketValue.motoId, status: socketValue.status, isVibration: socketValue.isVibration}));
        });
    
        return () => {
          socket.off('statusmoto');
        };
-    }, []);
+    }, [dispatch]);
 
 
    useEffect(() => {
@@ -81,27 +76,6 @@ const Layout = () => {
     }, []); 
 
 
-    //   // 1. Réinitialiser notifReceive à true toutes les 20s
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //     setNotifReceive(true);
-    //     }, 20000); // 20 secondes
-
-    //     return () => clearInterval(interval); // nettoyage à la destruction du composant
-    // }, []);
-
-    // // 2. Masquer la notification après 5s si elle est active
-    // useEffect(() => {
-    //     if (notifReceive) {
-    //         const timer = setTimeout(() => {
-    //             setNotifReceive(false);
-    //         }, 5000); // 5 secondes
-
-    //         return () => clearTimeout(timer);
-    //     }
-    // }, [notifReceive]);
- 
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -122,6 +96,40 @@ const Layout = () => {
 
 
   
+    const coordinateHisto = useSelector(selectCoordinateHisto)
+    // console.log("coordinateHisto: ",coordinateHisto);
+
+    const sortedCoordinateHisto = Object.entries(coordinateHisto ?? {})
+    .sort(([keyA], [keyB]) => {
+        const dateA = parseDateKey(keyA);
+        const dateB = parseDateKey(keyB);
+        return dateB.getTime() - dateA.getTime();
+    })
+    .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+    }, {} as CoordinateHistoryMap);
+    
+
+    useEffect(() => {
+        dispatch(addCoordinateToday({ data: sortedCoordinateHisto[Object.keys(sortedCoordinateHisto)[0]]  }));
+    }, [dispatch, sortedCoordinateHisto]);
+    
+
+    useEffect(() => {
+       socket.on('gps', (socketValue) => {
+        console.log("gps : ",socketValue);
+        const { data, status } = socketValue
+        if(status === "stay")   dispatch(socketCoordMoto({ long: data.longitude, lat: data.latitude, speed: data.speed }));
+        else dispatch(socketCoordMoto({ long: data.long, lat: data.lat, speed: data.speed }));
+         
+       });
+   
+       return () => {
+         socket.off('gps');
+       };
+    }, [dispatch]);
+
 
      if (isLoading) {
         return <LoadingPage></LoadingPage>

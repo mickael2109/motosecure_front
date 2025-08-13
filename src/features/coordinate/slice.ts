@@ -1,18 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { CoordinateState } from "./type";
 import { getAllCoordinateMoto, getAllHistoCoordinateMoto } from "./thunk";
+import { parseKeyToDate } from "../../utils/convertDate";
 
 const initialState: CoordinateState = {
     status: "idle",
     error: null,
     coordinate: [],
-    coordinateHisto: null
+    coordinateHisto: null,
+    coordinateToday: null
 };
 
 const coordinateSlice = createSlice({
   name: "coordinate",
   initialState,
-  reducers: {  },
+  reducers: {  
+    addCoordinateToday: (state, action) => {
+      const { data } = action.payload;
+      state.coordinateToday = data
+    },
+
+
+    updateCoordinate: (state, action) => {
+      const { data } = action.payload;
+
+      if (state.coordinateHisto) {
+          const keys = Object.keys(state.coordinateHisto);
+          const mostRecentKey = keys.sort(
+              (a, b) => parseKeyToDate(b).getTime() - parseKeyToDate(a).getTime()
+          )[0];
+          const coord = state.coordinateHisto[mostRecentKey];
+          coord.coord.push(data);   
+      }
+      state.coordinateToday?.coord.push(data)
+    },
+
+   
+
+  },
   extraReducers: (builder) => {
 
     /**
@@ -57,6 +82,8 @@ const coordinateSlice = createSlice({
   },
 });
 
+
+export const { addCoordinateToday, updateCoordinate } = coordinateSlice.actions;
 export default coordinateSlice.reducer;
 
 

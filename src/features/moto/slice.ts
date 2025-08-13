@@ -11,7 +11,41 @@ const initialState: MotoState = {
 const motoSlice = createSlice({
   name: "moto",
   initialState,
-  reducers: {  },
+  reducers: {  
+    socketCoordMoto: (state, action) => {
+      const { long, lat, speed } = action.payload;
+
+      const itemIndex = state.moto.findIndex(
+        (item) => item.id === 1
+      );
+      if (itemIndex !== -1) {
+        
+        const initValue = state.moto[itemIndex];
+        initValue.lastLong = 0
+        initValue.lastLat = 0
+        initValue.lastSpeed = 0
+
+        state.moto[itemIndex].lastLong = long;
+        state.moto[itemIndex].lastLat = lat;
+        state.moto[itemIndex].lastSpeed = speed;
+      }
+    },
+
+
+    socketVibrationAndStatusMoto: (state, action) => {
+      const { motoId, status, isVibration } = action.payload;
+
+      
+      const itemIndex = state.moto.findIndex(
+        (item) => item.id === motoId
+      );
+      if (itemIndex !== -1) {
+
+        state.moto[itemIndex].status = status;
+        state.moto[itemIndex].isVibration = isVibration;
+      }
+    },
+  },
   extraReducers: (builder) => {
 
     /**
@@ -41,7 +75,6 @@ const motoSlice = createSlice({
       state.status = "succeeded";
       state.error = null;
 
-      console.log("action.payload.data: ", action.payload.data);
 
       if (action.payload.success) {
         const updatedMoto = action.payload.data;
@@ -72,7 +105,7 @@ const motoSlice = createSlice({
 
   },
 });
-
+export const { socketCoordMoto, socketVibrationAndStatusMoto } = motoSlice.actions;
 export default motoSlice.reducer;
 
 

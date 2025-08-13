@@ -19,6 +19,7 @@ const Notification = () => {
                     <div><span>Aujourd'hui</span></div>
                     <div className="flex flex-col justify-center items-center gap-1">
                         <HistoryCard></HistoryCard>
+                        {/* <HistoryCard></HistoryCard>
                         <HistoryCard></HistoryCard>
                         <HistoryCard></HistoryCard>
                         <HistoryCard></HistoryCard>
@@ -29,8 +30,7 @@ const Notification = () => {
                         <HistoryCard></HistoryCard>
                         <HistoryCard></HistoryCard>
                         <HistoryCard></HistoryCard>
-                        <HistoryCard></HistoryCard>
-                        <HistoryCard></HistoryCard>
+                        <HistoryCard></HistoryCard> */}
                     </div>
                 </div>
            </div>

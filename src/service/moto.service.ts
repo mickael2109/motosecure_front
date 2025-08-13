@@ -33,7 +33,6 @@ const getAllMotoUser = async (userId: number) => {
  */
 const onOffMoto = async (onOffMotoInput: OnOffMotoInterface) => {
     try {
-      console.log("onOffMotoInput : ",onOffMotoInput);
       
       const response = await Axios.post('/moto/updatestatus', {
         id: onOffMotoInput.id,
@@ -43,7 +42,6 @@ const onOffMoto = async (onOffMotoInput: OnOffMotoInterface) => {
           'Content-Type': 'application/json'
         }
       });
-      console.log("response: ",response);
       
       return {
         success: true,

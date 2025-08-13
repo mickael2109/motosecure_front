@@ -80,6 +80,9 @@ import L from 'leaflet';
 import io from 'socket.io-client';
 import { useEffect, useState } from "react";
 import motoIconImg from '../assets/svg/moto.png';
+import { useSelector } from 'react-redux';
+import { selectCoordinateToday } from '../features/coordinate/selectors';
+import { getUser } from '../features/user/selectors';
 
 // 🧩 Socket setup
 const socket = io('https://mc-back.onrender.com', {
@@ -122,7 +125,9 @@ interface MapProps {
 
 const MyMap: React.FC<MapProps> = ({ page }) => {
   const [tileUrl, setTileUrl] = useState("");
-  const [position, setPosition] = useState<LatLngExpression>([-18.823707410254165, 47.55651565808284]);
+  const user = useSelector(getUser);
+  const coordinateToday = useSelector(selectCoordinateToday);
+  const [position, setPosition] = useState<LatLngExpression>([coordinateToday?.coord[coordinateToday.coord.length - 1].lat || -18.823707410254165, coordinateToday?.coord[coordinateToday.coord.length - 1].long ||47.55651565808284]);
   const [route, setRoute] = useState<LatLngExpression[]>([]);
   const [isMapVisible, setIsMapVisible] = useState(false);
 
@@ -136,17 +141,35 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
       : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png");
   }, []);
 
-  useEffect(() => {
-    socket.on('location', (socketValue) => {
-      const newPos: LatLngExpression = [socketValue.lat, socketValue.long];
-      setPosition(newPos);
-      setRoute(prev => [...prev, newPos]);
-    });
 
-    return () => {
-      socket.off('location');
-    };
-  }, []);
+
+  useEffect(() => {
+    if (coordinateToday && coordinateToday.coord) {
+      const routePoints: LatLngExpression[] = coordinateToday.coord.map(point => [
+        point.lat,
+        point.long
+      ]);
+      setRoute(routePoints);
+    }
+  }, [coordinateToday]);
+
+  useEffect(() => {
+      socket.on('gps', (socketValue) => {
+        const { data, status } = socketValue
+        if(status === "move" && user?.id === data.Moto.userId){
+          const newPos: LatLngExpression = [data.lat, data.long];
+          setPosition(newPos);
+          setRoute(prev => [...prev, newPos]);
+        }
+      });
+  
+      return () => {
+        socket.off('gps');
+      };
+  }, [user?.id]);
+
+
+
 
 
   return (

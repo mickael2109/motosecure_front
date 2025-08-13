@@ -13,7 +13,7 @@ const HistoryCard = () => {
         </div>
         <div className='flex flex-col justify-between'>
           <div><span className="text-[13px]">Alerte urgent</span></div>
-          <div className='text-[12px]'>{truncateToWords("Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione consectetur,", 8)}</div>
+          <div className='text-[12px]'>{truncateToWords("Vibration détecté sur votre moto,", 8)}</div>
         </div>
         <div> <i className='text-[14px] cursor-pointers text-red-500'><FaTrashRestoreAlt /></i></div>
       </div>

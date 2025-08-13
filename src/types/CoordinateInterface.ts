@@ -2,6 +2,10 @@ import type { MotoInterface } from "./MotoInterface";
 
 export type CoordinateHistoryMap = Record<string, CoordinateHistoryInterface>;
 
+export interface CoordinateHistoryMapNow{
+  [key: string]: CoordinateHistoryInterface; // clé dynamique
+}
+
 export interface CoordinateHistoryInterface {
     data: CoordinateDataInterface; 
     coord: CoordinateInterface[];

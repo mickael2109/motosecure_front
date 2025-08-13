@@ -8,12 +8,12 @@ import Map from "../../../components/Map";
 import { MdGpsFixed, MdPowerOff } from "react-icons/md";
 import { MdPower } from "react-icons/md";
 import { FaChevronRight } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCompass } from "react-icons/fa";
 import { IoMoonOutline, IoSpeedometer } from "react-icons/io5";
 import { LuSunDim } from "react-icons/lu";
 import { useSelector } from "react-redux";
-import { getToken, getUser } from "../../../features/user/selectors";
+import { getUser } from "../../../features/user/selectors";
 import Cookies from "js-cookie";
 import { useAppDispatch } from "../../../app/store";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -21,6 +21,12 @@ import { resetApp } from "../../../app/resetAction";
 import { selectAllMotoUser } from "../../../features/moto/selectors";
 import type { OnOffMotoInterface } from "../../../types/MotoInterface";
 import { onOffMotoThunk } from "../../../features/moto/thunk";
+import io from 'socket.io-client';
+
+const socket = io('https://mc-back.onrender.com', {
+  transports: ['websocket', 'polling'],
+  withCredentials: true,
+});
 
 const Home = () => {    
 
@@ -29,17 +35,29 @@ const Home = () => {
 
     const user = useSelector(getUser);
     const moto = useSelector(selectAllMotoUser);
-    // const coordinate = useSelector(selectCoordinate);
-    const token = useSelector(getToken);
-
-
-    const [isOn, setIsOn] = useState(moto[0].status);
-    const [dotHome, setDotHome] = useState("moto");
+    // console.log("moto : ",moto);
     
 
-    console.log("token : ",token);
-    console.log("user : ",user);
-    console.log("moto : ",moto);
+    const [isOn, setIsOn] = useState(moto[0].status);
+    const [dotHome, setDotHome] = useState("carte");
+    
+    
+
+    useEffect(() => {
+        socket.on('statusmoto', (socketValue) => {
+        setIsOn(socketValue.status)
+          });
+    
+        return () => {
+            socket.off('statusmoto');
+        };
+    }, []);
+
+    // console.log("token : ",token);
+    // console.log("user : ",user);
+    // console.log("moto : ",moto);
+    // console.log("coordinateToday: ",coordinateToday);
+    
     
     
     const handleLogout = async () => {
@@ -98,7 +116,7 @@ const Home = () => {
 
                    <div className="flex flex-col items-center justify-center gap-8 h-md:break_md_gap2">
                         <div>
-                            <div><span className="text-4xl h-lg:break_lg_txthome font-bold opacity-70">Hi, Mickael</span></div>
+                            <div><span className="text-4xl h-lg:break_lg_txthome font-bold opacity-70">Hi, {user?.pseudo || user?.email}</span></div>
                         </div>
 
                         <form
@@ -166,9 +184,10 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="border border-second_mc/10 dark:bg-second_mc/5 bg-black/10 backdrop-blur-m w-[80%] p-2 text-[12px] font-semibold rounded-xl dark:shadow-xl opacity-70">
-                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: -13.39433232 / Lat: 15.3423323</span></div>
-                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><IoSpeedometer /></i><span>15Km/H</span></div>
-                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Nord</div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: {moto[0].lastLong || 0} / Lat: {moto[0].lastLat || 0}</span></div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><IoSpeedometer /></i><span>{moto[0].lastSpeed || 0} Km/H</span></div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Moteur {moto[0].status === false ? "coupé": "allumé"}</div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Vibration {moto[0].isVibration === true ? "activé": "desactivé"}</div>
                         </div>
                    </div>
                 </div>

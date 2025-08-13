@@ -17,7 +17,12 @@ const History = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [selectHistory, setSelectHistory] = useState(false)
     const moto = useSelector(selectAllMotoUser);
-    const coordinateHisto = useSelector(selectCoordinateHisto)
+    // const coordinateHisto = useSelector(selectCoordinateHisto)
+    const coordinateHisto = useSelector(selectCoordinateHisto);
+
+
+    
+
    
     const [histoSelect, setHistoSelect] = useState("");
 
@@ -71,7 +76,7 @@ const History = () => {
 
     
 
-     console.log("sortedCoordinateHisto: ",sortedCoordinateHisto[Object.keys(sortedCoordinateHisto)[0]]);
+    //  console.log("sortedCoordinateHisto: ",sortedCoordinateHisto[Object.keys(sortedCoordinateHisto)[0]]);
 
     
     
