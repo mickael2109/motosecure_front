@@ -1,16 +1,14 @@
+import type { MotoInterface } from "./MotoInterface";
 import type { UserInterface } from "./UserInterface";
 
-export interface MotoInterface {
+export interface NotificationInterface {
     id: number; 
-    num_serie: string;
-    pseudo: string;
+    motoId: number;
     userId: number;
-    status: boolean;
-    isVibration: boolean;
-    lat: number;
-    long: number;
-    lastSpeed: number;
-    User: UserInterface
+    title: string;
+    description: string;
+    User: UserInterface;
+    Moto: MotoInterface;
     createdAt: string;
     updatedAt: string;
 }

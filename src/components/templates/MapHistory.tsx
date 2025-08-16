@@ -1,10 +1,13 @@
 import type { LatLngExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import type { CoordinateInterface } from '../../types/CoordinateInterface';
 import { useMap } from 'react-leaflet';
 import type { LatLngBoundsExpression } from 'leaflet';
-
+import L from 'leaflet';
+import motoIconImg from '../../assets/svg/moto.png';
+import { useSelector } from 'react-redux';
+import { selectAllMotoUser } from '../../features/moto/selectors';
 interface FitMapToRouteProps {
   positions: LatLngExpression[];
 }
@@ -30,12 +33,22 @@ interface MapProps {
 }
 
 
+// 📍 Custom Icon
+const motoIcon = new L.Icon({
+  iconUrl: motoIconImg,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
+
+
 const MapHistory: React.FC<MapProps> = ({coordonne}) => {
 
   
 
   const [route, setRoute] = useState<LatLngExpression[]>([]);
   const [start, setStart] = useState<LatLngExpression | null>(null);
+  const moto = useSelector(selectAllMotoUser);
 
   useEffect(() => {
     const newRoute = coordonne.map((c) => [c.lat, c.long] as LatLngExpression);
@@ -55,6 +68,8 @@ const MapHistory: React.FC<MapProps> = ({coordonne}) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; OpenStreetMap contributors"
           />
+
+          <Marker position={[moto[0].lat, moto[0].long]} icon={motoIcon} />
 
           {route.length > 0 && (
             <>

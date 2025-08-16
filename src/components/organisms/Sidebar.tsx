@@ -21,7 +21,7 @@ const Sidebar = () => {
                 ></div>
                 <NavlinkIcons to="/home/history" path="history" onClick={() => setPath("history")}></NavlinkIcons>
                 <NavlinkIcons to="/home" path="home" onClick={() => setPath("home")}></NavlinkIcons>
-                <NavlinkIcons to="/home" path="profile" onClick={() => setPath("profile")}></NavlinkIcons>
+                <NavlinkIcons to="/home/profil" path="profile" onClick={() => setPath("profile")}></NavlinkIcons>
 
            </div>
         </div>

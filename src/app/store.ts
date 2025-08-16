@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage'; // Utilisez localStorage par d√
 import userReducer from "../features/user/slice";
 import motoReducer from "../features/moto/slice";
 import coordinateReducer from "../features/coordinate/slice";
+import notificationReducer from "../features/notification/slice";
 
 import {
   FLUSH,
@@ -20,7 +21,8 @@ import { useDispatch, useSelector, type TypedUseSelectorHook } from 'react-redux
 const appReducer = combineReducers({
   user: userReducer,
   moto: motoReducer,
-  coordinate: coordinateReducer
+  coordinate: coordinateReducer,
+  notification: notificationReducer
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

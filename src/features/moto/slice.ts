@@ -21,12 +21,12 @@ const motoSlice = createSlice({
       if (itemIndex !== -1) {
         
         const initValue = state.moto[itemIndex];
-        initValue.lastLong = 0
-        initValue.lastLat = 0
+        initValue.long = 0
+        initValue.lat = 0
         initValue.lastSpeed = 0
 
-        state.moto[itemIndex].lastLong = long;
-        state.moto[itemIndex].lastLat = lat;
+        state.moto[itemIndex].long = long;
+        state.moto[itemIndex].lat = lat;
         state.moto[itemIndex].lastSpeed = speed;
       }
     },

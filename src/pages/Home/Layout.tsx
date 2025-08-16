@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from '../../components/organisms/Sidebar';
-import { useEffect, useState, type SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../app/store';
 import { useSelector } from 'react-redux';
 import { getToken, getUser } from '../../features/user/selectors';
@@ -15,6 +15,8 @@ import { parseDateKey } from '../../utils/convertDate';
 import type { CoordinateHistoryMap } from '../../types/CoordinateInterface';
 import { addCoordinateToday } from '../../features/coordinate/slice';
 import { socketCoordMoto, socketVibrationAndStatusMoto } from '../../features/moto/slice';
+import { getAllNotificationUser } from '../../features/notification/thunk';
+import { socketNotif } from '../../features/notification/slice';
 
 
 const socket = io('https://mc-back.onrender.com', {
@@ -54,18 +56,22 @@ const Layout = () => {
     }, [dispatch]);
 
 
-   useEffect(() => {
-        const handleAlerte = (socketValue: { message: SetStateAction<string>; }) => {
-            setNotifReceive(true);
-            setText(socketValue.message);
+    useEffect(() => {
+        const handleAlerte = (socketValue: { rep: { title: string; userId: number } }) => {
+            console.log("socketValue : ", socketValue.rep.userId);
 
-            // Démarrer le timer directement
-            const timer = setTimeout(() => {
-            setNotifReceive(false);
-            setText('');
-            }, 5000);
+            if (socketValue.rep.userId === user?.id) {
+                setNotifReceive(true);
+                setText(socketValue.rep.title);
+                dispatch(socketNotif({ rep: socketValue.rep}));
+                // Démarrer le timer directement
+                const timer = setTimeout(() => {
+                    setNotifReceive(false);
+                    setText('');
+                }, 5000);
 
-            return () => clearTimeout(timer);
+                return () => clearTimeout(timer);
+            }
         };
 
         socket.on('alerte', handleAlerte);
@@ -73,7 +79,8 @@ const Layout = () => {
         return () => {
             socket.off('alerte', handleAlerte);
         };
-    }, []); 
+    }, [user?.id]);
+
 
 
 
@@ -81,6 +88,8 @@ const Layout = () => {
         const fetchData = async () => {
             if (token && user && isLoading) {
                 await dispatch(getAllMotoUser(user.id)).unwrap();
+
+                await dispatch(getAllNotificationUser(user.id)).unwrap();
                 
 
                 if(moto.length > 0){
@@ -100,14 +109,14 @@ const Layout = () => {
     // console.log("coordinateHisto: ",coordinateHisto);
 
     const sortedCoordinateHisto = Object.entries(coordinateHisto ?? {})
-    .sort(([keyA], [keyB]) => {
-        const dateA = parseDateKey(keyA);
-        const dateB = parseDateKey(keyB);
-        return dateB.getTime() - dateA.getTime();
-    })
-    .reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
+        .sort(([keyA], [keyB]) => {
+            const dateA = parseDateKey(keyA);
+            const dateB = parseDateKey(keyB);
+            return dateB.getTime() - dateA.getTime();
+        })
+        .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
     }, {} as CoordinateHistoryMap);
     
 

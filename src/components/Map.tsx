@@ -83,6 +83,7 @@ import motoIconImg from '../assets/svg/moto.png';
 import { useSelector } from 'react-redux';
 import { selectCoordinateToday } from '../features/coordinate/selectors';
 import { getUser } from '../features/user/selectors';
+import { selectAllMotoUser } from '../features/moto/selectors';
 
 // 🧩 Socket setup
 const socket = io('https://mc-back.onrender.com', {
@@ -127,7 +128,7 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
   const [tileUrl, setTileUrl] = useState("");
   const user = useSelector(getUser);
   const coordinateToday = useSelector(selectCoordinateToday);
-  const [position, setPosition] = useState<LatLngExpression>([coordinateToday?.coord[coordinateToday.coord.length - 1].lat || -18.823707410254165, coordinateToday?.coord[coordinateToday.coord.length - 1].long ||47.55651565808284]);
+  const moto = useSelector(selectAllMotoUser);
   const [route, setRoute] = useState<LatLngExpression[]>([]);
   const [isMapVisible, setIsMapVisible] = useState(false);
 
@@ -158,7 +159,6 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
         const { data, status } = socketValue
         if(status === "move" && user?.id === data.Moto.userId){
           const newPos: LatLngExpression = [data.lat, data.long];
-          setPosition(newPos);
           setRoute(prev => [...prev, newPos]);
         }
       });
@@ -175,7 +175,7 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
   return (
     <div onClick={toggleMap} className={`relative w-full h-full cursor-pointer ${page ==='home' && "rounded-full"}`}>
       <MapContainer
-        center={position}
+        center={[moto[0].lat, moto[0].long]}
         zoom={16}
         scrollWheelZoom={true}
         style={{ height: '100%', width: '100%', borderRadius: page === 'home' ? '50%' : '0' }}
@@ -191,11 +191,11 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
           />
         )}
 
-        <RecenterMap position={position} />
-        <ResizeMapOnToggle position={position} trigger={isMapVisible} />
+        <RecenterMap position={[moto[0].lat, moto[0].long]} />
+        <ResizeMapOnToggle position={[moto[0].lat, moto[0].long]} trigger={isMapVisible} />
 
         <CircleMarker
-          center={position}
+          center={[moto[0].lat, moto[0].long]}
           radius={20}
           pathOptions={{
             color: '#00ffff',
@@ -205,7 +205,7 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
           }}
         />
 
-        <Marker position={position} icon={motoIcon} />
+        <Marker position={[moto[0].lat, moto[0].long]} icon={motoIcon} />
 
         {route.length > 1 && (
           <Polyline positions={route} pathOptions={{ color: '#2ffdb9', dashArray: '10' }} />

@@ -1,5 +1,6 @@
 // import fond from "../../../assets/fond/moto_no_bg.svg"
 import fond from "../../../assets/png/moto2.png"
+// import fondFond from "../../../assets/png/moto2.jpg"
 // import { TbHandStop } from "react-icons/tb";
 import { IoMdNotifications } from "react-icons/io";
 // import { LuMapPin } from "react-icons/lu";
@@ -88,7 +89,11 @@ const Home = () => {
 
     return (
         <div className="relative min-h-screen bg-cover bg-center p-6 dark:bg-gradient-to-b from-transparent to-second_mc/30 ">
-
+             {/* <img 
+                src={fondFond} 
+                alt="fond" 
+                className="absolute top-0 left-0 w-full h-full object-cover -z-10 brightness-80 blur-[8px] opacity-80 dark:opacity-80" 
+            /> */}
             <div className=" z-10 relative flex flex-col justify-between h-[90vh]">
                 <div className="flex flex-col gap-6 h-md:break_md_gap1 ">
                     <div className="flex flex-row justify-between items-center">
@@ -184,7 +189,7 @@ const Home = () => {
                             </div>
                         </div>
                         <div className="border border-second_mc/10 dark:bg-second_mc/5 bg-black/10 backdrop-blur-m w-[80%] p-2 text-[12px] font-semibold rounded-xl dark:shadow-xl opacity-70">
-                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: {moto[0].lastLong || 0} / Lat: {moto[0].lastLat || 0}</span></div>
+                            <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><MdGpsFixed /></i><span>Long: {moto[0].long || 0} / Lat: {moto[0].lat || 0}</span></div>
                             <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><IoSpeedometer /></i><span>{moto[0].lastSpeed || 0} Km/H</span></div>
                             <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Moteur {moto[0].status === false ? "coupé": "allumé"}</div>
                             <div className="flex flex-row justify-start items-center gap-1"><i className="text-second_mc"><FaCompass /></i>Vibration {moto[0].isVibration === true ? "activé": "desactivé"}</div>

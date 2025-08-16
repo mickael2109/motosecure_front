@@ -9,8 +9,8 @@ const HomeRoute = () => {
             <Route path="/carte" element={<Carte/>}/> 
             <Route path="/profil" element={<Profil/>}/>
             <Route path="/history" element={<History/>}/>
+            <Route path="/notification" element={<Notification/>}/>
           </Route>
-          <Route path="/notification" element={<Notification/>}/>
           
         </Routes>
     );
