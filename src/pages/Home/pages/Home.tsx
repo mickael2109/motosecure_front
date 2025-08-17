@@ -23,8 +23,10 @@ import { selectAllMotoUser } from "../../../features/moto/selectors";
 import type { OnOffMotoInterface } from "../../../types/MotoInterface";
 import { onOffMotoThunk } from "../../../features/moto/thunk";
 import io from 'socket.io-client';
+import { selectCoordinateToday } from "../../../features/coordinate/selectors";
+import { BackUrl } from "../../../service/Axios";
 
-const socket = io('https://mc-back.onrender.com', {
+const socket = io(BackUrl, {
   transports: ['websocket', 'polling'],
   withCredentials: true,
 });
@@ -37,6 +39,7 @@ const Home = () => {
     const user = useSelector(getUser);
     const moto = useSelector(selectAllMotoUser);
     // console.log("moto : ",moto);
+    const coordinateToday = useSelector(selectCoordinateToday);
     
 
     const [isOn, setIsOn] = useState(moto[0].status);
@@ -57,7 +60,7 @@ const Home = () => {
     // console.log("token : ",token);
     // console.log("user : ",user);
     // console.log("moto : ",moto);
-    // console.log("coordinateToday: ",coordinateToday);
+    console.log("coordinateToday: ",coordinateToday);
     
     
     

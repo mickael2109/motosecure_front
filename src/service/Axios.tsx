@@ -4,7 +4,7 @@ import axios from 'axios'
 const Axios = axios.create({
     // baseURL: "http://192.168.1.151:4000"
     baseURL: "https://mc-back.onrender.com"
-    // baseURL: 'http://localhost:4000' 
+    // baseURL: 'http://localhost:8080' 
     
 })
 
@@ -25,4 +25,4 @@ export default Axios
 
 // export const BackUrl = 'http://192.168.1.151:4000'
 export const BackUrl = 'https://mc-back.onrender.com'
-// export const BackUrl = 'http://localhost:4000'
+// export const BackUrl = 'http://localhost:8080'

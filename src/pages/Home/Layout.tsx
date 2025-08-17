@@ -17,9 +17,10 @@ import { addCoordinateToday } from '../../features/coordinate/slice';
 import { socketCoordMoto, socketVibrationAndStatusMoto } from '../../features/moto/slice';
 import { getAllNotificationUser } from '../../features/notification/thunk';
 import { socketNotif } from '../../features/notification/slice';
+import { BackUrl } from '../../service/Axios';
 
 
-const socket = io('https://mc-back.onrender.com', {
+const socket = io(BackUrl, {
   transports: ['websocket', 'polling'],
   withCredentials: true,
 });
@@ -127,10 +128,10 @@ const Layout = () => {
 
     useEffect(() => {
        socket.on('gps', (socketValue) => {
-        console.log("gps : ",socketValue);
-        const { data, status } = socketValue
-        if(status === "stay")   dispatch(socketCoordMoto({ long: data.longitude, lat: data.latitude, speed: data.speed }));
-        else dispatch(socketCoordMoto({ long: data.long, lat: data.lat, speed: data.speed }));
+            console.log("gps layout : ",socketValue);
+            const { data, status } = socketValue
+            if(status === "stay")   dispatch(socketCoordMoto({ long: data.longitude, lat: data.latitude, speed: data.speed }));
+            else dispatch(socketCoordMoto({ long: data.data.long, lat: data.data.lat, speed: data.data.speed }));
          
        });
    

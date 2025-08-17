@@ -84,9 +84,10 @@ import { useSelector } from 'react-redux';
 import { selectCoordinateToday } from '../features/coordinate/selectors';
 import { getUser } from '../features/user/selectors';
 import { selectAllMotoUser } from '../features/moto/selectors';
+import { BackUrl } from '../service/Axios';
 
 // 🧩 Socket setup
-const socket = io('https://mc-back.onrender.com', {
+const socket = io(BackUrl, {
   transports: ['websocket', 'polling'],
   withCredentials: true,
 });
@@ -157,8 +158,10 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
   useEffect(() => {
       socket.on('gps', (socketValue) => {
         const { data, status } = socketValue
-        if(status === "move" && user?.id === data.Moto.userId){
-          const newPos: LatLngExpression = [data.lat, data.long];
+        console.log("socketValue map: ",socketValue);
+        
+        if(status === "move" && user?.id === data.data.Moto.userId){
+          const newPos: LatLngExpression = [data.data.lat, data.data.long];
           setRoute(prev => [...prev, newPos]);
         }
       });
