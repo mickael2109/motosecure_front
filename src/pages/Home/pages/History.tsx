@@ -20,7 +20,8 @@ const History = () => {
     // const coordinateHisto = useSelector(selectCoordinateHisto)
     const coordinateHisto = useSelector(selectCoordinateHisto);
 
-
+    console.log("coordinateHisto: ",coordinateHisto);
+    
     
 
    
@@ -78,6 +79,8 @@ const History = () => {
 
     //  console.log("sortedCoordinateHisto: ",sortedCoordinateHisto[Object.keys(sortedCoordinateHisto)[0]]);
 
+    // console.log("sortedCoordinateHisto[histoSelect].coord: ",sortedCoordinateHisto);
+    
     
     
 
@@ -88,6 +91,7 @@ const History = () => {
                 ref={containerRef}
                 onClick={() => setSelectHistory(true)}
             >
+                {/* <MapHistory></MapHistory> */}
                 <MapHistory coordonne={sortedCoordinateHisto[histoSelect].coord} />
             </div>
 

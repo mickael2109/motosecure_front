@@ -20,10 +20,10 @@ const motoSlice = createSlice({
       );
       if (itemIndex !== -1) {
         
-        const initValue = state.moto[itemIndex];
-        initValue.long = 0
-        initValue.lat = 0
-        initValue.lastSpeed = 0
+        // const initValue = state.moto[itemIndex];
+        // initValue.long = 0
+        // initValue.lat = 0
+        // initValue.lastSpeed = 0
 
         state.moto[itemIndex].long = long;
         state.moto[itemIndex].lat = lat;

@@ -80,7 +80,7 @@ const Layout = () => {
         return () => {
             socket.off('alerte', handleAlerte);
         };
-    }, [user?.id]);
+    }, [dispatch, user?.id]);
 
 
 

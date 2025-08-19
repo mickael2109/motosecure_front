@@ -62,6 +62,16 @@ const MapHistory: React.FC<MapProps> = ({coordonne}) => {
 
   return (
     <>
+      {/* <MapContainer  zoom={17} style={{ width: '100%', height: '100%' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+
+          <Marker position={[moto[0].lat, moto[0].long]} icon={motoIcon} />
+
+          
+        </MapContainer> */}
       {start && (
         <MapContainer center={start} zoom={17} style={{ width: '100%', height: '100%' }}>
           <TileLayer

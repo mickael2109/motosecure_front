@@ -130,6 +130,8 @@ const MyMap: React.FC<MapProps> = ({ page }) => {
   const user = useSelector(getUser);
   const coordinateToday = useSelector(selectCoordinateToday);
   const moto = useSelector(selectAllMotoUser);
+  // console.log("moto: ",moto);
+  
   const [route, setRoute] = useState<LatLngExpression[]>([]);
   const [isMapVisible, setIsMapVisible] = useState(false);
 
