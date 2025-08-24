@@ -11,7 +11,7 @@ const Notification = () => {
     
 
     return (
-        <div className="relative min-h-screen bg-cover bg-center p-6 dark:bg-gradient-to-b from-transparent to-second_mc/30">
+        <div className="relative min-h-screen bg-cover bg-center p-6 bg-gradient-to-b from-transparent to-second_mc/50">
            <div className="flex flex-row items-center justify-between bg-transparent ">
                 <div className="flex flex-row justify-start gap-2 items-center">
                     <div><NavLink to="/home"><i className="text-2xl opacity-60"><MdKeyboardReturn></MdKeyboardReturn></i></NavLink></div>

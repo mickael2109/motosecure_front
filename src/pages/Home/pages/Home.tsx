@@ -11,8 +11,7 @@ import { MdPower } from "react-icons/md";
 import { FaChevronRight } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { FaCompass } from "react-icons/fa";
-import { IoMoonOutline, IoSpeedometer } from "react-icons/io5";
-import { LuSunDim } from "react-icons/lu";
+import { IoSpeedometer } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { getUser } from "../../../features/user/selectors";
 import Cookies from "js-cookie";
@@ -23,6 +22,7 @@ import { selectAllMotoUser } from "../../../features/moto/selectors";
 import type { OnOffMotoInterface } from "../../../types/MotoInterface";
 import { onOffMotoThunk } from "../../../features/moto/thunk";
 import io from 'socket.io-client';
+import { RxExit } from "react-icons/rx";
 // import { selectCoordinateToday } from "../../../features/coordinate/selectors";
 import { BackUrl } from "../../../service/Axios";
 
@@ -91,7 +91,7 @@ const Home = () => {
 
 
     return (
-        <div className="relative min-h-screen bg-cover bg-center p-6 dark:bg-gradient-to-b from-transparent to-second_mc/30 ">
+        <div className="relative min-h-screen bg-cover bg-center p-6 bg-gradient-to-b from-transparent to-second_mc/50 ">
              {/* <img 
                 src={fondFond} 
                 alt="fond" 
@@ -104,21 +104,20 @@ const Home = () => {
                             <div ><img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" className="w-15 h-15 rounded-full border border-second_mc"/></div>
                         </div>
                         <div className="flex flex-row justify-center items-center gap-2 opacity-60">
-                            <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" onClick={handleLogout}><i className="text-2xl"><IoMdNotifications /></i></div>
-                            <NavLink to="/home/notification"  className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" >
+                            <NavLink to="/home/notification"  className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" ><i className="text-2xl"><IoMdNotifications /></i></NavLink>
+                            <div className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" onClick={handleLogout}><i className="text-2xl"><RxExit /></i></div>
+                            
+                            
+                            {/* <NavLink to="/home/notification"  className="bg-[#fff] dark:bg-[#232628] p-4 rounded-full h-lg:break_lg_icon" >
                                 <label className="swap swap-rotate">
-                                 {/* this hidden checkbox controls the state */}
                                 <input type="checkbox" />
-
-                                {/* sun icon */}
                                 <i className="swap-on text-2xl"><LuSunDim></LuSunDim></i>
 
-                                {/* moon icon */}
                                 <i className="swap-off text-2xl"><IoMoonOutline></IoMoonOutline></i>
                                 
                               
                                 </label>
-                            </NavLink>
+                            </NavLink> */}
                         </div>
                     </div>
 
